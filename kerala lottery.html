@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Lottery Tax Calculator | Calculate TDS on Lottery Winnings</title>
+    <meta name="description" content="Free Kerala Lottery Tax Calculator. Calculate TDS, net amount, and tax liability on your lottery winnings. Accurate calculations for all Kerala lottery schemes.">
+    <meta name="keywords" content="Kerala lottery tax calculator, lottery TDS calculator, Kerala lottery tax, lottery winnings tax, TDS on lottery">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-green: #2e7d32;
+            --secondary-green: #43a047;
+            --gold: #ffa000;
+            --dark-gold: #f57c00;
+            --light-green: #c8e6c9;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #424242;
+            --red: #d32f2f;
+            --text-primary: #212121;
+            --text-secondary: #757575;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: linear-gradient(135deg, var(--light-green) 0%, var(--white) 100%);
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo i {
+            background: var(--gold);
+            padding: 0.5rem;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            color: var(--white);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--secondary-green) 100%);
+            color: var(--white);
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--white);
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            background: var(--dark-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-green);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--gold);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Calculator Section */
+        .calculator-container {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .calculator-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .calculator-form {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary-green);
+            box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            margin-top: 1.25rem;
+        }
+
+        .calculate-btn {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            border: none;
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-self: center;
+            min-width: 200px;
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(135deg, var(--secondary-green), var(--primary-green));
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+        }
+
+        .clear-btn {
+            background: var(--red);
+            color: var(--white);
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            justify-self: center;
+        }
+
+        .clear-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+        }
+
+        /* Results Section */
+        .results-container {
+            background: linear-gradient(135deg, var(--light-green), var(--white));
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .results-container.show {
+            display: block;
+            animation: slideInUp 0.5s ease-out;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .result-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .result-card i {
+            font-size: 3rem;
+            color: var(--secondary-green);
+            margin-bottom: 1rem;
+        }
+
+        .result-card h3 {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .result-card .amount {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-green);
+        }
+
+        .tax-breakdown {
+            grid-column: 1 / -1;
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            color: var(--primary-green);
+            font-size: 1.1rem;
+        }
+
+        /* Info Cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .info-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .info-card i {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            color: var(--primary-green);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .info-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Popular Lotteries */
+        .lottery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .lottery-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .lottery-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .lottery-header {
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .lottery-body {
+            padding: 2rem;
+        }
+
+        .lottery-body ul {
+            list-style: none;
+        }
+
+        .lottery-body li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lottery-body li:last-child {
+            border-bottom: none;
+        }
+
+        /* FAQ Section */
+        .faq-item {
+            background: var(--white);
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: var(--light-green);
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #a5d6a7;
+        }
+
+        .faq-question h3 {
+            color: var(--primary-green);
+            margin: 0;
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: var(--white);
+        }
+
+        .faq-answer.show {
+            padding: 1.5rem;
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-gray);
+            color: var(--white);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            padding: 0.3rem 0;
+        }
+
+        .footer-section ul li a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 2rem;
+            text-align: center;
+            color: #bbb;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary-green);
+                flex-direction: column;
+                padding: 1rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.show {
+                display: flex;
+            }
+
+            .nav-menu a {
+                padding: 1rem 2rem;
+                border-bottom: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .calculator-container {
+                padding: 2rem 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-card .amount {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Error and Success Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .message.show {
+            display: block;
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        .message.error {
+            background: #ffebee;
+            color: var(--red);
+            border: 1px solid #ffcdd2;
+        }
+
+        .message.success {
+            background: #e8f5e8;
+            color: var(--primary-green);
+            border: 1px solid var(--light-green);
+        }
+
+        /* Print Styles */
+        @media print {
+            .header, .footer, .nav-menu, .cta-button, .calculate-btn, .clear-btn {
+                display: none !important;
+            }
+            
+            .results-container {
+                display: block !important;
+                background: white !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                Kerala Lottery Tax Calculator
+            </div>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home">Home</a>
+                <a href="#calculator">Calculator</a>
+                <a href="#guide">Tax Guide</a>
+                <a href="#lotteries">Lotteries</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+            <button class="mobile-menu" id="mobileMenu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <h1><i class="fas fa-trophy"></i> Kerala Lottery Tax Calculator</h1>
+            <p>Calculate TDS and net amount on your Kerala lottery winnings instantly. Free, accurate, and easy to use.</p>
+            <a href="#calculator" class="cta-button">Calculate Tax Now <i class="fas fa-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="section" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Lottery Tax Calculator</h2>
+            
+            <div class="calculator-container">
+                <div id="message" class="message"></div>
+                
+                <form class="calculator-form" id="calculatorForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="prizeAmount">Prize Amount (₹)</label>
+                            <input type="number" id="prizeAmount" placeholder="Enter your winning amount" min="100" step="1" required>
+                            <i class="fas fa-rupee-sign input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="lotteryType">Lottery Type</label>
+                            <select id="lotteryType" required>
+                                <option value="">Select Lottery Type</option>
+                                <option value="karunya">Karunya (Saturday)</option>
+                                <option value="akshaya">Akshaya (Wednesday)</option>
+                                <option value="win-win">Win Win (Monday)</option>
+                                <option value="sthree-sakthi">Sthree Sakthi (Tuesday)</option>
+                                <option value="karunya-plus">Karunya Plus (Thursday)</option>
+                                <option value="nirmal">Nirmal (Friday)</option>
+                                <option value="pournami">Pournami (Sunday)</option>
+                                <option value="vishu-bumper">Vishu Bumper</option>
+                                <option value="onam-bumper">Onam Bumper</option>
+                                <option value="xmas-bumper">Christmas Bumper</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ticketPrice">Ticket Price (₹)</label>
+                            <input type="number" id="ticketPrice" placeholder="Enter ticket price" min="30" value="30" required>
+                            <i class="fas fa-ticket-alt input-icon"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="drawDate">Date of Draw</label>
+                            <input type="date" id="drawDate" required>
+                        </div>
+                    </div>
+
+                    <button type="button" class="calculate-btn" id="calculateBtn">
+                        <i class="fas fa-calculator"></i> Calculate Tax
+                    </button>
+                    <button type="button" class="clear-btn" id="clearBtn">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </form>
+            </div>
+
+            <!-- Results Container -->
+            <div class="results-container" id="resultsContainer">
+                <h3 style="text-align: center; color: var(--primary-green); margin-bottom: 2rem;">
+                    <i class="fas fa-chart-line"></i> Tax Calculation Results
+                </h3>
+                
+                <div class="results-grid">
+                    <div class="result-card">
+                        <i class="fas fa-gift"></i>
+                        <h3>Gross Prize</h3>
+                        <div class="amount" id="grossAmount">₹0</div>
+                    </div>
+                    <div class="result-card">
+                        <i class="fas fa-percentage"></i>
+                        <h3>TDS (30%)</h3>
+                        <div class="amount" id="tdsAmount">₹0</div>
+                    </div>
+                    <div class="result-card">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <h3>Net Amount</h3>
+                        <div class="amount" id="netAmount">₹0</div>
+                    </div>
+                </div>
+
+                <div class="tax-breakdown">
+                    <h4 style="color: var(--primary-green); margin-bottom: 1rem;">
+                        <i class="fas fa-list-ul"></i> Tax Breakdown
+                    </h4>
+                    <div class="breakdown-item">
+                        <span>Prize Amount:</span>
+                        <span id="breakdownPrize">₹0</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Tax Rate (TDS):</span>
+                        <span id="breakdownRate">30%</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Tax Deducted:</span>
+                        <span id="breakdownTax">₹0</span>
+                    </div>
+                    <div class="breakdown-item">
+                        <span>Final Amount Received:</span>
+                        <span id="breakdownNet">₹0</span>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="window.print()" style="background: var(--gold); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; margin-right: 1rem;">
+                        <i class="fas fa-print"></i> Print Results
+                    </button>
+                    <button id="saveResults" style="background: var(--secondary-green); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer;">
+                        <i class="fas fa-download"></i> Save Results
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tax Guide Section -->
+    <section class="section" id="guide" style="background: var(--light-gray);">
+        <div class="container">
+            <h2 class="section-title">Kerala Lottery Tax Guide</h2>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <i class="fas fa-info-circle"></i>
+                    <h3>How TDS Works</h3>
+                    <p>TDS (Tax Deducted at Source) of 30% is applicable on lottery winnings above ₹10,000. This tax is deducted before you receive your prize money.</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>IT Return Filing</h3>
+                    <p>Lottery winnings must be declared in your income tax return under "Income from Other Sources." You can claim credit for TDS deducted.</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h3>Tax Saving Tips</h3>
+                    <p>Consider investing part of your winnings in tax-saving instruments like ELSS, PPF, or NSC to reduce overall tax liability.</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>Important Dates</h3>
+                    <p>File your IT return by July 31st of the assessment year. Pay any additional tax due before the deadline to avoid penalties.</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Legal Compliance</h3>
+                    <p>Always ensure proper documentation of your lottery winnings and maintain records of TDS certificates for future reference.</p>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Multiple Winnings</h3>
+                    <p>If you have multiple lottery winnings in a year, club them together for tax calculation purposes and maintain proper records.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Lotteries Section -->
+    <section class="section" id="lotteries">
+        <div class="container">
+            <h2 class="section-title">Popular Kerala Lotteries</h2>
+            
+            <div class="lottery-grid">
+                <div class="lottery-card">
+                    <div class="lottery-header">
+                        <h3><i class="fas fa-star"></i> Weekly Lotteries</h3>
+                    </div>
+                    <div class="lottery-body">
+                        <ul>
+                            <li><span>Win Win (Monday)</span> <span>₹75 Lakh</span></li>
+                            <li><span>Sthree Sakthi (Tuesday)</span> <span>₹75 Lakh</span></li>
+                            <li><span>Akshaya (Wednesday)</span> <span>₹70 Lakh</span></li>
+                            <li><span>Karunya Plus (Thursday)</span> <span>₹80 Lakh</span></li>
+                            <li><span>Nirmal (Friday)</span> <span>₹70 Lakh</span></li>
+                            <li><span>Karunya (Saturday)</span> <span>₹1 Crore</span></li>
+                            <li><span>Pournami (Sunday)</span> <span>₹70 Lakh</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lottery-card">
+                    <div class="lottery-header">
+                        <h3><i class="fas fa-gift"></i> Bumper Lotteries</h3>
+                    </div>
+                    <div class="lottery-body">
+                        <ul>
+                            <li><span>Vishu Bumper</span> <span>₹10 Crore</span></li>
+                            <li><span>Monsoon Bumper</span> <span>₹5 Crore</span></li>
+                            <li><span>Thiruvonam Bumper</span> <span>₹12 Crore</span></li>
+                            <li><span>Pooja Bumper</span> <span>₹5 Crore</span></li>
+                            <li><span>X-mas New Year Bumper</span> <span>₹12 Crore</span></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="lottery-card">
+                    <div class="lottery-header">
+                        <h3><i class="fas fa-chart-bar"></i> Tax Information</h3>
+                    </div>
+                    <div class="lottery-body">
+                        <ul>
+                            <li><span>TDS Rate</span> <span>30%</span></li>
+                            <li><span>Minimum for TDS</span> <span>₹10,000</span></li>
+                            <li><span>Tax Section</span> <span>194B</span></li>
+                            <li><span>IT Return</span> <span>Mandatory</span></li>
+                            <li><span>Additional Tax</span> <span>As per slab</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq" style="background: var(--light-gray);">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What is TDS on lottery winnings?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>TDS (Tax Deducted at Source) is a tax of 30% deducted on lottery winnings exceeding ₹10,000. This is deducted under Section 194B of the Income Tax Act before you receive your prize money.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do I need to file IT return for lottery winnings?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, lottery winnings must be declared in your income tax return under "Income from Other Sources" regardless of the amount. You can claim credit for TDS already deducted.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Is there any additional tax apart from TDS?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, if your total income including lottery winnings falls in higher tax brackets, you may need to pay additional tax. However, you can claim credit for the 30% TDS already deducted.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Can I reduce tax on lottery winnings?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The 30% TDS is mandatory and cannot be reduced. However, you can invest part of your winnings in tax-saving instruments to reduce overall tax liability on other income.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What documents do I need for claiming lottery winnings?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You need the original winning ticket, valid ID proof, PAN card, and address proof. For winnings above ₹10,000, you'll also receive a TDS certificate (Form 16A).</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How accurate is this calculator?</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>This calculator provides accurate TDS calculations based on current Indian tax laws. However, consult a tax professional for complex situations or significant winnings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Calculators Section -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Related Financial Calculators</h2>
+            
+            <div class="info-cards">
+                <div class="info-card">
+                    <i class="fas fa-percentage"></i>
+                    <h3>GST Calculator</h3>
+                    <p>Calculate GST on your purchases and sales with our comprehensive GST calculator.</p>
+                    <a href="https://aicalculator.in/including-gst-calculator/" target="_blank" style="color: var(--secondary-green); text-decoration: none; font-weight: bold;">
+                        Calculate GST <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-star"></i>
+                    <h3>Natal Chart Calculator</h3>
+                    <p>Generate detailed astrological birth charts and predictions with our advanced calculator.</p>
+                    <a href="https://aicalculator.in/natal-chart-calculator/" target="_blank" style="color: var(--secondary-green); text-decoration: none; font-weight: bold;">
+                        Generate Chart <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+                
+                <div class="info-card">
+                    <i class="fas fa-coins"></i>
+                    <h3>Kerala Lottery Tax</h3>
+                    <p>Advanced Kerala lottery tax calculator with detailed analysis and reporting features.</p>
+                    <a href="https://aicalculator.in/kerala-lottery-tax/" target="_blank" style="color: var(--secondary-green); text-decoration: none; font-weight: bold;">
+                        Advanced Calculator <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3><i class="fas fa-coins"></i> Kerala Lottery Tax Calculator</h3>
+                    <p>Your trusted companion for calculating tax on Kerala lottery winnings. Get accurate TDS calculations and tax guidance.</p>
+                    <div style="margin-top: 1rem;">
+                        <i class="fas fa-envelope"></i> info@keralotterytax.com<br>
+                        <i class="fas fa-phone"></i> +91 9876543210
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#calculator">Tax Calculator</a></li>
+                        <li><a href="#guide">Tax Guide</a></li>
+                        <li><a href="#lotteries">Kerala Lotteries</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Legal Information</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Disclaimer</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="https://www.incometax.gov.in" target="_blank">Income Tax Department</a></li>
+                        <li><a href="https://keralalotteries.com" target="_blank">Kerala State Lotteries</a></li>
+                        <li><a href="#">Tax Saving Tips</a></li>
+                        <li><a href="#">Latest Updates</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kerala Lottery Tax Calculator. All rights reserved. | Designed for educational purposes only.</p>
+                <p><strong>Disclaimer:</strong> This calculator is for informational purposes only. Please consult a tax professional for official tax advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navMenu = document.getElementById('navMenu');
+        
+        mobileMenu.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+            const icon = mobileMenu.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                // Close mobile menu if open
+                navMenu.classList.remove('show');
+                const icon = mobileMenu.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-times');
+            });
+        });
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                
+                // Close all other open FAQ items
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer) {
+                        otherAnswer.classList.remove('show');
+                        otherAnswer.previousElementSibling.querySelector('i').classList.remove('fa-chevron-up');
+                        otherAnswer.previousElementSibling.querySelector('i').classList.add('fa-chevron-down');
+                    }
+                });
+                
+                answer.classList.toggle('show');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+
+        // Calculator Functionality
+        const calculatorForm = document.getElementById('calculatorForm');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const messageDiv = document.getElementById('message');
+
+        // Set today's date as default
+        document.getElementById('drawDate').valueAsDate = new Date();
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-IN', {
+                style: 'currency',
+                currency: 'INR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Show message
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type} show`;
+            setTimeout(() => {
+                messageDiv.classList.remove('show');
+            }, 5000);
+        }
+
+        // Validate inputs
+        function validateInputs() {
+            const prizeAmount = parseFloat(document.getElementById('prizeAmount').value);
+            const lotteryType = document.getElementById('lotteryType').value;
+            const ticketPrice = parseFloat(document.getElementById('ticketPrice').value);
+            const drawDate = document.getElementById('drawDate').value;
+
+            if (!prizeAmount || prizeAmount < 100) {
+                showMessage('Please enter a valid prize amount (minimum ₹100)', 'error');
+                return false;
+            }
+
+            if (prizeAmount > 15000000000) { // 15 crores limit
+                showMessage('Prize amount seems too high. Please check your input.', 'error');
+                return false;
+            }
+
+            if (!lotteryType) {
+                showMessage('Please select a lottery type', 'error');
+                return false;
+            }
+
+            if (!ticketPrice || ticketPrice < 30) {
+                showMessage('Please enter a valid ticket price (minimum ₹30)', 'error');
+                return false;
+            }
+
+            if (!drawDate) {
+                showMessage('Please select the draw date', 'error');
+                return false;
+            }
+
+            // Check if draw date is not in future
+            const today = new Date();
+            const selectedDate = new Date(drawDate);
+            if (selectedDate > today) {
+                showMessage('Draw date cannot be in the future', 'error');
+                return false;
+            }
+
+            return true;
+        }
+
+        // Calculate tax
+        function calculateTax() {
+            if (!validateInputs()) return;
+
+            const prizeAmount = parseFloat(document.getElementById('prizeAmount').value);
+            let tdsAmount = 0;
+            let tdsRate = 0;
+
+            // TDS calculation logic
+            if (prizeAmount > 10000) {
+                tdsRate = 30;
+                tdsAmount = (prizeAmount * 30) / 100;
+            }
+
+            const netAmount = prizeAmount - tdsAmount;
+
+            // Update results
+            document.getElementById('grossAmount').textContent = formatCurrency(prizeAmount);
+            document.getElementById('tdsAmount').textContent = formatCurrency(tdsAmount);
+            document.getElementById('netAmount').textContent = formatCurrency(netAmount);
+
+            // Update breakdown
+            document.getElementById('breakdownPrize').textContent = formatCurrency(prizeAmount);
+            document.getElementById('breakdownRate').textContent = tdsRate + '%';
+            document.getElementById('breakdownTax').textContent = formatCurrency(tdsAmount);
+            document.getElementById('breakdownNet').textContent = formatCurrency(netAmount);
+
+            // Show results
+            resultsContainer.classList.add('show');
+            resultsContainer.scrollIntoView({ behavior: 'smooth' });
+
+            showMessage('Tax calculation completed successfully!', 'success');
+        }
+
+        // Clear form
+        function clearForm() {
+            calculatorForm.reset();
+            resultsContainer.classList.remove('show');
+            messageDiv.classList.remove('show');
+            document.getElementById('drawDate').valueAsDate = new Date();
+            showMessage('Form cleared successfully', 'success');
+        }
+
+        // Event listeners
+        calculateBtn.addEventListener('click', calculateTax);
+        clearBtn.addEventListener('click', clearForm);
+
+        // Real-time calculation on input change
+        document.getElementById('prizeAmount').addEventListener('input', function() {
+            const value = this.value;
+            if (value && !isNaN(value) && value > 0) {
+                // Auto-calculate after 1 second of no typing
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(() => {
+                    if (document.getElementById('lotteryType').value) {
+                        calculateTax();
+                    }
+                }, 1000);
+            }
+        });
+
+        // Save results functionality
+        document.getElementById('saveResults').addEventListener('click', function() {
+            const prizeAmount = document.getElementById('prizeAmount').value;
+            const lotteryType = document.getElementById('lotteryType').value;
+            const drawDate = document.getElementById('drawDate').value;
+            const grossAmount = document.getElementById('grossAmount').textContent;
+            const tdsAmount = document.getElementById('tdsAmount').textContent;
+            const netAmount = document.getElementById('netAmount').textContent;
+
+            const resultsText = `
+Kerala Lottery Tax Calculation Results
+=====================================
+Date: ${new Date().toLocaleDateString()}
+Lottery Type: ${lotteryType}
+Draw Date: ${drawDate}
+Prize Amount: ${grossAmount}
+TDS (30%): ${tdsAmount}
+Net Amount: ${netAmount}
+=====================================
+Generated by Kerala Lottery Tax Calculator
+            `;
+
+            const blob = new Blob([resultsText], { type: 'text/plain' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `lottery-tax-calculation-${new Date().toISOString().split('T')[0]}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+            
+            showMessage('Results saved successfully!', 'success');
+        });
+
+        // Form validation styling
+        document.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.checkValidity()) {
+                    this.style.borderColor = 'var(--secondary-green)';
+                } else {
+                    this.style.borderColor = 'var(--red)';
+                }
+            });
+
+            input.addEventListener('focus', function() {
+                this.style.borderColor = 'var(--secondary-green)';
+            });
+        });
+
+        // Lottery type change handler
+        document.getElementById('lotteryType').addEventListener('change', function() {
+            const ticketPriceInput = document.getElementById('ticketPrice');
+            const selectedLottery = this.value;
+            
+            // Set default ticket prices based on lottery type
+            const ticketPrices = {
+                'karunya': 40,
+                'akshaya': 40,
+                'win-win': 30,
+                'sthree-sakthi': 40,
+                'karunya-plus': 40,
+                'nirmal': 40,
+                'pournami': 40,
+                'vishu-bumper': 300,
+                'onam-bumper': 300,
+                'xmas-bumper': 300
+            };
+            
+            if (ticketPrices[selectedLottery]) {
+                ticketPriceInput.value = ticketPrices[selectedLottery];
+            }
+        });
+
+        // Add loading animation to calculate button
+        calculateBtn.addEventListener('click', function() {
+            const originalText = this.innerHTML;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Calculating...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                this.innerHTML = originalText;
+                this.disabled = false;
+            }, 1000);
+        });
+
+        // Initialize tooltips and help text
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add help text to inputs
+            const helpTexts = {
+                'prizeAmount': 'Enter the gross prize amount you won',
+                'lotteryType': 'Select the specific Kerala lottery scheme',
+                'ticketPrice': 'Enter the price you paid for the ticket',
+                'drawDate': 'Select the date when the draw took place'
+            };
+
+            Object.keys(helpTexts).forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.title = helpTexts[id];
+                    input.setAttribute('data-help', helpTexts[id]);
+                }
+            });
+
+            // Animate elements on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.info-card, .lottery-card, .result-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                observer.observe(el);
+            });
+        });
+
+        // Add keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl + Enter to calculate
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                calculateTax();
+            }
+            
+            // Escape to clear
+            if (e.key === 'Escape') {
+                clearForm();
+            }
+        });
+
+        // Copy results to clipboard functionality
+        function copyToClipboard() {
+            const resultsText = `
+Prize: ${document.getElementById('grossAmount').textContent}
+TDS: ${document.getElementById('tdsAmount').textContent}  
+Net: ${document.getElementById('netAmount').textContent}
+            `.trim();
+            
+            navigator.clipboard.writeText(resultsText).then(() => {
+                showMessage('Results copied to clipboard!', 'success');
+            }).catch(() => {
+                showMessage('Failed to copy results', 'error');
+            });
+        }
+
+        // Add copy button to results
+        if (navigator.clipboard) {
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = '<i class="fas fa-copy"></i> Copy Results';
+            copyButton.style.cssText = 'background: var(--primary-green); color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; margin-left: 1rem;';
+            copyButton.onclick = copyToClipboard;
+            
+            const buttonContainer = document.querySelector('.results-container div[style*="text-align: center"]');
+            if (buttonContainer) {
+                buttonContainer.appendChild(copyButton);
+            }
+        }
+    </script>
+</body>
+</html>
